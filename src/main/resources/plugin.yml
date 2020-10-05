@@ -1,0 +1,4 @@
+name: "JinroPlugin"
+version: "${project.version}"
+main: "com.github.nitoa_s.JinroPlugin.JinroPlugin"
+api-version: "1.16"
