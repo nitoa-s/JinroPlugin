@@ -1,15 +1,14 @@
 package com.github.nitoa_s.JinroPlugin;
 
-import java.util.ArrayList;
-
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import com.github.nitoa_s.JinroPlugin.item.book.RoleBook;
+import com.github.nitoa_s.JinroPlugin.item.book.RuleBook;
 
 public class JinroPlugin extends JavaPlugin implements Listener{
 
@@ -28,15 +27,9 @@ public class JinroPlugin extends JavaPlugin implements Listener{
 		Player p = e.getPlayer();
 		String message = "人狼ゲームサーバーへようこそ";
 		p.sendMessage(message);
-		ItemStack book = new ItemStack(Material.WRITTEN_BOOK);
-		ArrayList<String> pages = new ArrayList<String>(1);
-		BookMeta bookMeta = (BookMeta) book.getItemMeta();
-		bookMeta.setAuthor("運営");
-		bookMeta.setTitle("ルールブック");
-		pages.add("人狼ゲームルールブック");
-		pages.add("人狼ゲームルールブック2");
-		bookMeta.setPages(pages);
-		book.setItemMeta(bookMeta);
-		if( !p.getInventory().contains(book) ) p.getInventory().addItem(book);
+		ItemStack ruleBook = RuleBook.giveRuleBook();
+		ItemStack roleBook = RoleBook.giveRoleBook();
+		if( !p.getInventory().contains(ruleBook) ) p.getInventory().addItem(ruleBook);
+		if( !p.getInventory().contains(roleBook) ) p.getInventory().addItem(roleBook);
 	}
 }
