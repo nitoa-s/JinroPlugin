@@ -7,6 +7,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.github.nitoa_s.JinroPlugin.command.JinroCommand;
 import com.github.nitoa_s.JinroPlugin.item.book.RoleBook;
 import com.github.nitoa_s.JinroPlugin.item.book.RuleBook;
 
@@ -14,6 +15,8 @@ public class JinroPlugin extends JavaPlugin implements Listener{
 
 	public void onEnable() {
 		getServer().getPluginManager().registerEvents(this,this);
+		JinroGame game = new JinroGame();
+		getCommand("jinro").setExecutor(new JinroCommand(game));
 		getLogger().info("人狼プラグインが読み込まれました");
 	}
 
