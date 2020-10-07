@@ -12,15 +12,17 @@ import com.github.nitoa_s.JinroPlugin.item.book.RoleBook;
 import com.github.nitoa_s.JinroPlugin.item.book.RuleBook;
 
 public class JinroPlugin extends JavaPlugin implements Listener{
-
+	JinroConfig config;
 	public void onEnable() {
 		getServer().getPluginManager().registerEvents(this,this);
-		JinroGame game = new JinroGame();
+		config = new JinroConfig(this);
+		JinroGame game = new JinroGame(config);
 		getCommand("jinro").setExecutor(new JinroCommand(game));
 		getLogger().info("人狼プラグインが読み込まれました");
 	}
 
 	public void onDisable() {
+		config.save();
 		getLogger().info("人狼プラグインを停止しました");
 	}
 

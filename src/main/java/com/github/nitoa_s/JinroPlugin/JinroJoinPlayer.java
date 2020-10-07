@@ -17,6 +17,7 @@ public class JinroJoinPlayer {
 
 	public void setRole(JinroRole role) {
 		this.role = role;
+		player.sendMessage("あなたの役職は「" + role.getRoleName() + "」です");
 	}
 
 	public void isDied() {

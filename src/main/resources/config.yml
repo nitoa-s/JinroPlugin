@@ -1,0 +1,11 @@
+roles:
+  village: 3
+  fortune: 1
+  medium: 1
+  hunter: 1
+  werewolf: 2
+  madma: 1
+time:
+  nightTime: 20
+  dayTime: 30
+  voteTime: 10
