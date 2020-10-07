@@ -20,6 +20,7 @@ public class JinroJoinPlayer {
 	}
 
 	public void isDied() {
+		player.damage(1000);
 		isDeath = true;
 	}
 	public Player getPlayer() {
