@@ -9,13 +9,16 @@ import org.bukkit.command.TabCompleter;
 
 import com.github.nitoa_s.JinroPlugin.JinroGame;
 import com.github.nitoa_s.JinroPlugin.command.arguments.commonCommand.JoinCommand;
+import com.github.nitoa_s.JinroPlugin.command.arguments.commonCommand.StartCommand;
 
 public class JinroCommand implements CommandExecutor, TabCompleter {
 
 	private JoinCommand join;
+	private StartCommand start;
 
 	public JinroCommand(JinroGame game) {
 		join = new JoinCommand(game);
+		start = new StartCommand(game);
 	}
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -27,6 +30,12 @@ public class JinroCommand implements CommandExecutor, TabCompleter {
 					 	return true;
 					 }
 					 break;
+		case "start": if( start.condition(sender, args) ) {
+					  	start.run(sender, args);
+					  	return true;
+					  }
+					  break;
+		default:break;
 		}
 		return false;
 	}
