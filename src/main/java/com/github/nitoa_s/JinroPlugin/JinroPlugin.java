@@ -16,7 +16,7 @@ public class JinroPlugin extends JavaPlugin implements Listener{
 	public void onEnable() {
 		getServer().getPluginManager().registerEvents(this,this);
 		config = new JinroConfig(this);
-		JinroGame game = new JinroGame(config);
+		JinroGame game = new JinroGame(this, config);
 		getCommand("jinro").setExecutor(new JinroCommand(game));
 		getLogger().info("人狼プラグインが読み込まれました");
 	}

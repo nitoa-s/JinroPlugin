@@ -1,7 +1,5 @@
 package com.github.nitoa_s.JinroPlugin.role;
 
-import org.bukkit.entity.Player;
-
 import com.github.nitoa_s.JinroPlugin.JinroJoinPlayer;
 
 public enum JinroRole {
@@ -19,6 +17,7 @@ public enum JinroRole {
 
 	private JinroRole(String roleName, String roleKey, RoleCamp roleCamp, RoleCamp fortuneCamp) {
 		this.roleName = roleName;
+		this.roleKey = roleKey;
 		this.roleCamp = roleCamp;
 		this.fortuneCamp = fortuneCamp;
 	}
