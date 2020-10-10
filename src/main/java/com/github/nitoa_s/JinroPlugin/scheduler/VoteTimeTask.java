@@ -18,19 +18,14 @@ public class VoteTimeTask extends AbstractTimeTask {
 			board.setTimeScore(timer);
 			new VoteTimeTask(plugin, game, board, timer).runTaskLater(plugin, 20);
 		} else {
-			// TODO: 同数再投票
-			RoleCamp victoryCamp = game.victoryRoleCamp();
-			if( game.getDebug() || victoryCamp != null ) {
-				game.sendJoinAllPlayer("ゲーム終了");
-			} else {
-				new NightTimeTask(plugin, game, board, game.getNightTime()).ready();
-				new NightTimeTask(plugin, game, board, game.getNightTime()).runTaskLater(plugin, 0);
-			}
+			new HangTimeTask(plugin, game, board, 0).ready();
+			new HangTimeTask(plugin, game, board, 0).runTaskLater(plugin, 50);
 		}
 	}
 
 	@Override
 	public void ready() {
+		game.setState(JinroGame.VOTE_STATE);
 		String[] messages = {
 				"--------投票タイム--------",
 				"投票の時間になりました。誰か一人を投票してください（自分に投票も可）。",

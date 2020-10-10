@@ -28,6 +28,7 @@ public class NightTimeTask  extends AbstractTimeTask {
 
 	@Override
 	public void ready() {
+		game.setState(JinroGame.NIGHT_STATE);
 		String message = "--------" + game.getDay() + "日目の夜になりました-------";
 		game.sendJoinAllPlayer(message);
 	}

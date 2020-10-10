@@ -10,20 +10,28 @@ import com.github.nitoa_s.JinroPlugin.role.RoleCamp;
 import com.github.nitoa_s.JinroPlugin.scheduler.NightTimeTask;
 
 public class JinroGame {
+	public final static String NIGHT_STATE = "夜";
+	public final static String DAY_STATE = "昼";
+	public final static String VOTE_STATE = "投票";
+	public final static String HANG_STATE = "処刑";
+	public final static String ATTACK_STATE = "襲撃";
 	private JinroPlugin plugin;
 	private JinroConfig config;
+	private JinroScoreBoard scoreBoard;
+	private JinroVoteManager voteManager;
 	private ArrayList<JinroJoinPlayer> joinPlayers = new ArrayList<JinroJoinPlayer>(1);
 	private int nightTime;
 	private int dayTime;
 	private int voteTime;
 	private int day = 1;
+	private String state;
 	private boolean debug;
-	private JinroScoreBoard scoreBoard;
 
 	public JinroGame(JinroPlugin plugin, JinroConfig config) {
 		this.plugin = plugin;
 		this.config = config;
 		scoreBoard = new JinroScoreBoard();
+		voteManager = new JinroVoteManager();
 	}
 
 	public void addPlayer(Player player) {
@@ -63,17 +71,33 @@ public class JinroGame {
 				roles.add(role);
 		}
 		return roles;
-
 	}
+
 	public void sendJoinAllPlayer(String... messages) {
 		for( JinroJoinPlayer joinPlayer: joinPlayers )
 			joinPlayer.getPlayer().sendMessage(messages);
 	}
 
 	public boolean existPlayer(Player target) {
+		if( getPlayer(target) == null ) return false;
+		return true;
+	}
+
+	public boolean existPlayer(String targetName) {
+		if( getPlayer(targetName) == null ) return false;
+		return true;
+	}
+
+	public JinroJoinPlayer getPlayer(Player target) {
 		for( JinroJoinPlayer joinPlayer: joinPlayers )
-			if( joinPlayer.getPlayer() == target ) return true;
-		return false;
+			if( joinPlayer.getPlayer() == target ) return joinPlayer;
+		return null;
+	}
+
+	public JinroJoinPlayer getPlayer(String targetName) {
+		for( JinroJoinPlayer joinPlayer: joinPlayers )
+			if( joinPlayer.getPlayer().getDisplayName().equals(targetName) ) return joinPlayer;
+		return null;
 	}
 
 	public RoleCamp victoryRoleCamp() {
@@ -93,10 +117,18 @@ public class JinroGame {
 		this.day = day;
 	}
 
+	public void setState(String state) {
+		this.state = state;
+	}
+
 	public void setDebug() {
 		debug = true;
 	}
 
+
+	public JinroVoteManager getVoteManager() {
+		return voteManager;
+	}
 
 	public int getNightTime() {
 		return nightTime;
@@ -112,6 +144,10 @@ public class JinroGame {
 
 	public int getDay() {
 		return day;
+	}
+
+	public String getState() {
+		return state;
 	}
 
 	public boolean getDebug() {
