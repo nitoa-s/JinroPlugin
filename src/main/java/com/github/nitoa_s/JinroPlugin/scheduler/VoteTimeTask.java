@@ -2,27 +2,29 @@ package com.github.nitoa_s.JinroPlugin.scheduler;
 
 import com.github.nitoa_s.JinroPlugin.JinroGame;
 import com.github.nitoa_s.JinroPlugin.JinroPlugin;
+import com.github.nitoa_s.JinroPlugin.JinroScoreBoard;
 import com.github.nitoa_s.JinroPlugin.role.RoleCamp;
 
 public class VoteTimeTask extends AbstractTimeTask {
 
-	VoteTimeTask(JinroPlugin plugin, JinroGame game, int timer) {
-		super(plugin, game, timer);
+	VoteTimeTask(JinroPlugin plugin, JinroGame game, JinroScoreBoard board, int timer) {
+		super(plugin, game, board, timer);
 	}
 
 	@Override
 	public void run() {
 		timer--;
 		if( timer >= 0 ) {
-			new VoteTimeTask(plugin, game, timer).runTaskLater(plugin, 20);
+			board.setTimeScore(timer);
+			new VoteTimeTask(plugin, game, board, timer).runTaskLater(plugin, 20);
 		} else {
 			// TODO: 同数再投票
 			RoleCamp victoryCamp = game.victoryRoleCamp();
 			if( game.getDebug() || victoryCamp != null ) {
 				game.sendJoinAllPlayer("ゲーム終了");
 			} else {
-				new NightTimeTask(plugin, game, game.getNightTime()).ready();
-				new NightTimeTask(plugin, game, game.getNightTime()).runTaskLater(plugin, 0);
+				new NightTimeTask(plugin, game, board, game.getNightTime()).ready();
+				new NightTimeTask(plugin, game, board, game.getNightTime()).runTaskLater(plugin, 0);
 			}
 		}
 	}
