@@ -33,6 +33,10 @@ public class JinroScoreBoard {
 		player.setScoreboard(scoreBoard);
 	}
 
+	public void undisplayBoard(JinroJoinPlayer joinPlayer) {
+		joinPlayer.getPlayer().getScoreboard().clearSlot(DisplaySlot.SIDEBAR);
+	}
+
 	public void unDisplayBoard(Player player) {
 		 player.getScoreboard().clearSlot(DisplaySlot.SIDEBAR);
 	}

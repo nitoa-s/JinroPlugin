@@ -7,23 +7,28 @@ public enum JinroRole {
 	FORTUNE("占い師", "fortune", RoleCamp.VILLAGE_CAMP),
 	MEDIUM("霊媒師", "medium", RoleCamp.VILLAGE_CAMP),
 	HUNTER("狩人", "hunter", RoleCamp.VILLAGE_CAMP),
-	WEREWOLF("人狼", "werewolf", RoleCamp.WEREWOLF_CAMP),
-	MADMAN("狂人", "madman", RoleCamp.WEREWOLF_CAMP, RoleCamp.VILLAGE_CAMP),
+	WEREWOLF("人狼", "werewolf", RoleCamp.WEREWOLF_CAMP, true),
+	MADMAN("狂人", "madman", RoleCamp.WEREWOLF_CAMP, RoleCamp.VILLAGE_CAMP, false),
 	;
 	private String roleName;
 	private String roleKey;
 	private RoleCamp roleCamp;
 	private RoleCamp fortuneCamp;
+	private boolean jinroChat;
 
-	private JinroRole(String roleName, String roleKey, RoleCamp roleCamp, RoleCamp fortuneCamp) {
+	private JinroRole(String roleName, String roleKey, RoleCamp roleCamp, RoleCamp fortuneCamp, boolean jinroChat) {
 		this.roleName = roleName;
 		this.roleKey = roleKey;
 		this.roleCamp = roleCamp;
 		this.fortuneCamp = fortuneCamp;
+		this.jinroChat = jinroChat;
+	}
+	private JinroRole(String roleName, String roleKey, RoleCamp roleCamp, boolean jinroChat) {
+		this(roleName, roleKey, roleCamp, roleCamp, jinroChat);
 	}
 
 	private JinroRole(String roleName, String roleKey, RoleCamp roleCamp) {
-		this(roleName, roleKey, roleCamp, roleCamp);
+		this(roleName, roleKey, roleCamp, roleCamp, false);
 	}
 
 	// 占いの結果
@@ -47,7 +52,12 @@ public enum JinroRole {
 	public String getRoleKey() {
 		return roleKey;
 	}
+
 	public RoleCamp getRoleCamp() {
 		return roleCamp;
+	}
+
+	public boolean getJinroChat() {
+		return jinroChat;
 	}
 }
