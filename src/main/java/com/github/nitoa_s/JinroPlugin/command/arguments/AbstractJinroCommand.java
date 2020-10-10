@@ -21,7 +21,12 @@ public abstract class AbstractJinroCommand {
 	}
 
 	protected boolean isJinroPlayer(Player player) {
-		return game.existPlayer(player) ? false : true;
+		return game.existPlayer(player) ? true : false;
+	}
+
+	protected boolean isState(String state) {
+		String s = game.getState();
+		return s != null && s.equals(state) ? true : false;
 	}
 
 	public final String getCommandName() {

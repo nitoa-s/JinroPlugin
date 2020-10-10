@@ -24,6 +24,7 @@ public class DayTimeTask extends AbstractTimeTask {
 
 	@Override
 	public void ready() {
+		game.setState(JinroGame.DAY_STATE);
 		String message = "--------" + game.getDay() + "日目の朝になりました--------";
 		game.sendJoinAllPlayer(message);
 	}
