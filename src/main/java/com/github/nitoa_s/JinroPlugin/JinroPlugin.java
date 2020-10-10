@@ -8,15 +8,17 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.github.nitoa_s.JinroPlugin.command.JinroCommand;
+import com.github.nitoa_s.JinroPlugin.event.JinroChatEvent;
 import com.github.nitoa_s.JinroPlugin.item.book.RoleBook;
 import com.github.nitoa_s.JinroPlugin.item.book.RuleBook;
 
 public class JinroPlugin extends JavaPlugin implements Listener{
-	JinroConfig config;
+	private JinroConfig config;
+	private JinroGame game;
 	public void onEnable() {
-		getServer().getPluginManager().registerEvents(this,this);
 		config = new JinroConfig(this);
-		JinroGame game = new JinroGame(this, config);
+		game = new JinroGame(this, config);
+		setRegisterEvents();
 		getCommand("jinro").setExecutor(new JinroCommand(game));
 		getLogger().info("人狼プラグインが読み込まれました");
 	}
@@ -36,5 +38,9 @@ public class JinroPlugin extends JavaPlugin implements Listener{
 		ItemStack roleBook = RoleBook.giveRoleBook();
 		if( !p.getInventory().contains(ruleBook) ) p.getInventory().addItem(ruleBook);
 		if( !p.getInventory().contains(roleBook) ) p.getInventory().addItem(roleBook);
+	}
+
+	private void setRegisterEvents() {
+		getServer().getPluginManager().registerEvents(this,this);
 	}
 }

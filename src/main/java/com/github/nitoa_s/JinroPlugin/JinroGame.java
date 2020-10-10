@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 
+import com.github.nitoa_s.JinroPlugin.event.JinroChatEvent;
 import com.github.nitoa_s.JinroPlugin.role.JinroRole;
 import com.github.nitoa_s.JinroPlugin.role.RoleCamp;
 import com.github.nitoa_s.JinroPlugin.scheduler.NightTimeTask;
@@ -59,8 +61,32 @@ public class JinroGame {
 			roles.remove(randomIndex);
 		}
 		for( JinroJoinPlayer joinPlayer: joinPlayers) scoreBoard.displayBoard(joinPlayer.getPlayer());
+		plugin.getServer().getPluginManager().registerEvents(new JinroChatEvent(plugin, this), plugin);
 		new NightTimeTask(plugin, this, scoreBoard, nightTime).ready();
 		new NightTimeTask(plugin, this, scoreBoard, nightTime).runTaskLater(plugin, 0);
+	}
+
+	public void gameEnd() {
+		if( !debug ) {
+			RoleCamp victoryCamp = victoryRoleCamp();
+			sendJoinAllPlayer(victoryCamp.getCampName() + "の勝利となりました。勝利プレイヤーは以下の方々です");
+			String[] rolePlayerInfo = new String[joinPlayers.size()];
+			for( int i = 0; i < joinPlayers.size(); i++ ) {
+				JinroJoinPlayer joinPlayer = joinPlayers.get(i);
+				if( joinPlayer.getRole().getRoleCamp() == victoryCamp ) sendJoinAllPlayer(joinPlayer.getPlayer().getDisplayName());
+				rolePlayerInfo[i] = joinPlayer.getPlayer().getDisplayName() + " --> " + joinPlayer.getRole().getRoleName();
+			}
+			sendJoinAllPlayer("--------(役職内訳)--------");
+			sendJoinAllPlayer(rolePlayerInfo);
+		}
+		plugin.getLogger().info("人狼ゲーム終了");
+		for(JinroJoinPlayer joinPlayer: joinPlayers) scoreBoard.undisplayBoard(joinPlayer);
+		voteManager.reset();
+		joinPlayers.clear();
+		day = 1;
+		state = null;
+		debug = false;
+		plugin.getLogger().info("設定を初期化しました");
 	}
 
 	private ArrayList<JinroRole> getUseRoles() {
@@ -128,6 +154,10 @@ public class JinroGame {
 
 	public JinroVoteManager getVoteManager() {
 		return voteManager;
+	}
+
+	public ArrayList<JinroJoinPlayer> getAllPlayers(){
+		return joinPlayers;
 	}
 
 	public int getNightTime() {

@@ -20,5 +20,9 @@ abstract class AbstractTimeTask extends BukkitRunnable {
 	}
 
 
+	protected boolean isContinue() {
+		return game.getDebug() || game.victoryRoleCamp() != null;
+	}
+
 	public abstract void ready();
 }

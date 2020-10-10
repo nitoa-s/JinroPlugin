@@ -21,6 +21,7 @@ public class HangTimeTask extends AbstractTimeTask {
 			game.sendJoinAllPlayer(game.getVoteManager().voteText());
 			if( isContinue() ) {
 				game.sendJoinAllPlayer("ゲーム終了です");
+				game.gameEnd();
 			} else {
 				game.getVoteManager().reset();
 				new NightTimeTask(plugin, game, board, game.getNightTime()).ready();
@@ -39,10 +40,6 @@ public class HangTimeTask extends AbstractTimeTask {
 			game.getVoteManager().reset();
 		}
 
-	}
-
-	private boolean isContinue() {
-		return game.getDebug() || game.victoryRoleCamp() != null;
 	}
 
 	@Override
