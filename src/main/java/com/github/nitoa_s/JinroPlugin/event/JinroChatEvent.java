@@ -33,7 +33,7 @@ public class JinroChatEvent implements Listener {
 		event.getRecipients().clear();
 		if( joinPlayer.getRole().getJinroChat() ) {
 			for(JinroJoinPlayer targetPlayer: game.getAllPlayers())
-				if( targetPlayer.getRole().getJinroChat() ) event.getRecipients().add(targetPlayer.getPlayer());
+				if( targetPlayer.getRole().getJinroChat() && !targetPlayer.getIsDeath() ) event.getRecipients().add(targetPlayer.getPlayer());
 		} else {
 			joinPlayer.getPlayer().sendMessage(message);
 		}
