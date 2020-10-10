@@ -18,10 +18,12 @@ public class JinroGame {
 	private int voteTime;
 	private int day = 1;
 	private boolean debug;
+	private JinroScoreBoard scoreBoard;
 
 	public JinroGame(JinroPlugin plugin, JinroConfig config) {
 		this.plugin = plugin;
 		this.config = config;
+		scoreBoard = new JinroScoreBoard();
 	}
 
 	public void addPlayer(Player player) {
@@ -48,8 +50,9 @@ public class JinroGame {
 			joinPlayer.setRole(roles.get(randomIndex));
 			roles.remove(randomIndex);
 		}
-		new NightTimeTask(plugin, this, nightTime).ready();
-		new NightTimeTask(plugin, this, nightTime).runTaskLater(plugin, 0);
+		for( JinroJoinPlayer joinPlayer: joinPlayers) scoreBoard.displayBoard(joinPlayer.getPlayer());
+		new NightTimeTask(plugin, this, scoreBoard, nightTime).ready();
+		new NightTimeTask(plugin, this, scoreBoard, nightTime).runTaskLater(plugin, 0);
 	}
 
 	private ArrayList<JinroRole> getUseRoles() {
